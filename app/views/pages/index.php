@@ -2,13 +2,6 @@
 
 <h1><?= $data['title']; ?></h1>
 
-<ul>
-  <?php foreach ($data['posts'] as $post) : ?>
 
-  <li><?= $post->title ?></li>
-
-  <?php endforeach; ?>
-
-</ul>
 
 <?php require APPROOT . '/views/include/footer.php'; ?>
