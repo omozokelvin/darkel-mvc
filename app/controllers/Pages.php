@@ -1,5 +1,6 @@
 <?php
 
+use helpers\Handler;
 use libraries\Controller;
 use models\Page;
 
@@ -12,6 +13,8 @@ class Pages extends Controller {
     $data = [
       'title' => $this->pageModel->getWelcomeMessage(),
     ];
+
+    Handler::dumpy('hello');
 
     $this->view('pages/index', $data);
   }
