@@ -1,5 +1,7 @@
 <?php
 
+namespace libraries;
+
 /******************************************
  * Base Controller                        *
  * Loads the models and views             *
@@ -7,13 +9,6 @@
 
 class Controller {
   //Load model
-  public function model(string $model) {
-    //Require model file
-    require_once '../app/models/' . $model . '.php';
-
-    //instantiate model
-    return new $model();
-  }
 
   //Load view
   public function view(string $view, $data = []) {

@@ -1,5 +1,7 @@
 <?php
 
+namespace libraries;
+
 /******************************************
  * App Core Class                         *
  * Creates Url & Loads core controller    *

@@ -1,5 +1,10 @@
 <?php
 
+namespace libraries;
+
+use PDO;
+use PDOException;
+
 /******************************************
  * PDO Database Class                     *
  * Connect to database                    *
