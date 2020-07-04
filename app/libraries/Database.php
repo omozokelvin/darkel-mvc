@@ -88,4 +88,92 @@ class Database {
   public function rowCount() {
     return $this->statement->rowCount();
   }
+
+  //Get last insert id
+  public function lastInsertId() {
+    return $this->dbHandler->lastInsertId();
+  }
+
+  //Insert into table
+  public function insert(string $tableName, array $data) {
+    if (!empty($data) && !empty($tableName)) {
+
+      $keys = array_keys($data);
+
+      $fields = implode(", ", $keys);
+
+      $templateVariable = '';
+      foreach ($keys as $key) {
+        if (is_string($key)) {
+          $templateVariable .= ":$key, ";
+        } else {
+          return false;
+        }
+      }
+
+      $templateVariable  = rtrim($templateVariable, ", ");
+
+      //we create the insert query using the array
+      $this->query("INSERT into `$tableName` ($fields) VALUES ($templateVariable)");
+
+      //we bind values
+      foreach ($data as $key => $value) {
+        $this->bind(":$key", $value);
+      }
+
+      if ($this->execute()) {
+        return $this->lastInsertId();
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  //Update a record
+  public function update($tableName, $data, $condition = '') {
+
+    if (!empty($data) && !empty($tableName)) {
+      $query = "UPDATE {$tableName} SET ";
+
+      $keys = array_keys($data);
+      foreach ($keys as $key) {
+        $query .= "$key = :$key, ";
+      }
+
+      $query = rtrim($query, ", ");
+
+      //we append condition string if available
+      $query .= !empty($condition) ? " WHERE $condition" : '';
+
+      $this->query($query);
+
+      //we bind values
+      foreach ($data as $key => $value) {
+        $this->bind(":$key", $value);
+      }
+
+      //Execute query
+      return !!$this->execute() ? true : false;
+    } else {
+      return false;
+    }
+  }
+
+  //delete using table name and condition string
+  public function delete($tableName, $condition, $limit = '') {
+
+    if (!empty($tableName) && !empty($condition)) {
+      //using ternary if condition, if limit is empty, 
+      //then do not add limit to query else add limit to query
+      $limit = ($limit == '') ? '' : 'LIMIT ' . $limit;
+      $query = "DELETE FROM {$tableName} WHERE {$condition} {$limit}";
+
+      $this->query($query);
+
+      //Execute query
+      return !!$this->execute() ? true : false;
+    }
+  }
 }
