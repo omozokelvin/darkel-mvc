@@ -16,3 +16,11 @@ define('URLROOT', '_YOUR_URL_');
 
 //SITE Name 
 define('SITENAME', '_YOUR_SITE_NAME_');
+
+//MAILER using PHPMAILER
+define('SITEMAIL', 'info@example.com');
+define('MAILHOST', 'mail.example.com');
+define('MAILADDRESS', 'no-reply@example.com');
+define('MAILPASSWORD', '123456');
+//Only change mail port if you are sure it is not 26
+define('MAILPORT', 26);
