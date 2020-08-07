@@ -4,23 +4,23 @@ namespace helpers;
 
 use PHPMailer\PHPMailer\PHPMailer;
 
-
 class Mailer {
 
   private $subject = '';
   private $message = '';
   private $address = [];
 
-  public function __construct(string $subject, string $message, array $address = ['email' => SITEMAIL, 'name' => SITENAME]) {
+  public function __construct(string $subject, string $message, array $address = [SITEMAIL => SITE_NAME]) {
     $this->subject = $subject;
     $this->message = $message;
     $this->address = $address;
   }
 
-  public function send(): bool {
+  public function send() {
 
-    require 'PHPMailer/src/PHPMailer.php';
-    require 'PHPMailer/src/SMTP.php';
+    require_once 'includes/PHPMailer/src/PHPMailer.php';
+    require_once 'includes/PHPMailer/src/SMTP.php';
+    require_once 'includes/PHPMailer/src/Exception.php';
 
     /* Create a new PHPMailer object. Passing TRUE to the constructor enables exceptions. */
     $mail = new PHPMailer(TRUE);
@@ -37,19 +37,19 @@ class Mailer {
     $mail->Password = MAILPASSWORD;
 
     $mail->From = MAILADDRESS;
-    $mail->FromName = SITENAME;
+    $mail->FromName = SITE_NAME;
 
     //allow us to pass in multiple users as an array
     $counter = 0;
     foreach ($this->address as $email => $name) {
       $counter++;
-      if ($counter = 1) {
+
+      if ($counter === 1) {
         $mail->AddAddress($email, $name);
       } else {
         $mail->AddCC($email, $name);
       }
     }
-
 
     $mail->IsHTML(true);
     $mail->WordWrap = 50;

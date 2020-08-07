@@ -5,6 +5,7 @@ namespace helpers;
 
 class Url {
   public static function redirect(string $page) {
-    header('location: ' . URLROOT . '/' . $page);
+    header('location: ' . URL_ROOT . '/' . $page);
+    exit();
   }
 }

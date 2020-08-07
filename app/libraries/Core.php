@@ -9,7 +9,7 @@ namespace libraries;
  *****************************************/
 
 class Core {
-  protected $currentController = 'Pages';
+  protected $currentController = 'Home';
   protected $currentMethod = 'index';
   protected $params = [];
 
@@ -19,7 +19,7 @@ class Core {
     $url = $this->getUrl();
 
     //Look in controllers for first value
-    if (file_exists('../app/controllers/' . ucwords($url[0]) . '.php')) {
+    if (file_exists('app/controllers/' . ucwords($url[0]) . '.php')) {
       //if exists, set as controller
       $this->currentController = ucwords($url[0]);
       //unset 0 index of url
@@ -27,7 +27,7 @@ class Core {
     }
 
     //require the controller
-    require_once '../app/controllers/' . $this->currentController . '.php';
+    require_once 'app/controllers/' . $this->currentController . '.php';
 
     //Instantiate controller class
     $this->currentController = new $this->currentController;
@@ -35,8 +35,8 @@ class Core {
     //Check for second part of url
     if (isset($url[1])) {
       //Check to see if method exists in controller 
-      if (method_exists($this->currentController, $url[1])) {
-        $this->currentMethod = $url[1];
+      if (method_exists($this->currentController, str_replace('-', '', $url[1]))) {
+        $this->currentMethod = str_replace('-', '', $url[1]);
         //unset 1 index of url
         unset($url[1]);
       }
@@ -50,8 +50,9 @@ class Core {
   }
 
   public function getUrl() {
-    if (isset($_GET['url'])) {
-      $url = rtrim($_GET['url'], '/');
+    if (isset($_GET['url']) || isset($_SERVER['REQUEST_URI'])) {
+      $uri = $_GET['url'] ?? $_SERVER['REQUEST_URI'];
+      $url = trim($uri, '/');
       $url = filter_var($url, FILTER_SANITIZE_URL);
       $url = explode('/', $url);
       return $url;

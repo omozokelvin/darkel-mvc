@@ -35,13 +35,13 @@ class Security {
   }
 
   // Encrypt password
-  public function passwordEncrypt($data): string {
+  public static function passwordEncrypt(string $data): string {
     $options = ['cost' => 10,];
     $password = password_hash($data, PASSWORD_BCRYPT, $options);
     return $password;
   }
 
-  public function VerifyPassword($password, $dbPassword): bool {
+  public static function VerifyPassword(string $password, string $dbPassword): bool {
     return password_verify($password, $dbPassword);
   }
 }

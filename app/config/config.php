@@ -1,21 +1,21 @@
 <?php
 
 //Db Params
-define('DB_HOST',  'localhost');
+define('DB_HOST',  '127.0.0.1');
 define('DB_USER',  '_YOUR_USERNAME_');
 define('DB_PASSWORD',  '_YOUR_PASSWORD_');
 define('DB_NAME',  '_YOUR_DBNAME_');
 
 
 //APP  Root
-define('APPROOT', dirname(dirname(__FILE__)));
+define('APP_ROOT', dirname(dirname(__FILE__)));
 
 //URL Root
 // http://localhost/darkel-mvc
-define('URLROOT', '_YOUR_URL_');
+define('URL_ROOT', '_YOUR_URL_');
 
 //SITE Name 
-define('SITENAME', '_YOUR_SITE_NAME_');
+define('SITE_NAME', '_YOUR_SITE_NAME_');
 
 //MAILER using PHPMAILER
 define('SITEMAIL', 'info@example.com');

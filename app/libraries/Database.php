@@ -23,9 +23,11 @@ class Database {
   private $statement;
   private $error;
 
-  public function __construct() {
+  private static $INSTANCE;
+
+  private function __construct() {
     //set DSN
-    $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName;
+    $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName . ';charset=utf8';
 
     $options = array(
       PDO::ATTR_PERSISTENT => true,
@@ -38,8 +40,27 @@ class Database {
       $this->dbHandler = new PDO($dsn, $this->user, $this->password, $options);
     } catch (PDOException  $e) {
       $this->error = $e->getMessage();
-      echo $this->error;
+      die($this->error);
     }
+  }
+
+  public static function ins() {
+    if (self::$INSTANCE == null) {
+      self::$INSTANCE = new self;
+    }
+    return self::$INSTANCE;
+  }
+
+  public function beginTransaction(): bool {
+    return $this->dbHandler->beginTransaction();
+  }
+
+  public function commit(): bool {
+    return $this->dbHandler->commit();
+  }
+
+  public function rollBack(): bool {
+    return $this->dbHandler->rollBack();
   }
 
   //Prepare statement with query
@@ -78,7 +99,7 @@ class Database {
   }
 
   //Get result set as array of objects
-  public function resultSet() {
+  public function resultSet(): array {
     $this->execute();
     return $this->statement->fetchAll(PDO::FETCH_OBJ);
   }
@@ -137,7 +158,7 @@ class Database {
   }
 
   //Update a record
-  public function update($tableName, $data, $condition = '') {
+  public function update($tableName, $data, $condition = ''): bool {
 
     if (!empty($data) && !empty($tableName)) {
       $query = "UPDATE {$tableName} SET ";

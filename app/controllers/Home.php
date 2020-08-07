@@ -3,7 +3,7 @@
 use libraries\Controller;
 use models\Page;
 
-class Pages extends Controller {
+class Home extends Controller {
   public function __construct() {
     $this->pageModel = new Page('Welcome');
   }

@@ -2,8 +2,6 @@
 
 namespace helpers;
 
-session_start();
-
 class Session {
 
   //flash message helper
@@ -21,7 +19,7 @@ class Session {
         $_SESSION[$name . '_class'] = $class;
       } else if (empty($message) && !empty($_SESSION[$name])) {
         $class = !empty($_SESSION[$name . '_class']) ? $_SESSION[$name . '_class'] : '';
-        echo '<div class="' . $class . '" id="msg-flash">' . $_SESSION[$name] . ' </div>';
+        echo '<div class="' . $class . ' alert-dismissible" id="msg-flash"><button type="button" class="close text-light" data-dismiss="alert" aria-hidden="true">×</button>' . $_SESSION[$name] . ' </div>';
 
         unset($_SESSION[$name]);
         unset($_SESSION[$name . '_class']);
@@ -31,18 +29,32 @@ class Session {
 
   //check if a user is logged in
   public static function isLoggedIn() {
-    return self::sessionExist('user_id');
+    if (!self::exists('user_id')) {
+      return false;
+    }
+    //option db check for user
+    return true;
   }
 
+
   //check if a session exists
-  public static function sessionExist($name) {
+  public static function exists($name) {
     return isset($_SESSION[$name]) ? true : false;
   }
 
   //add data to session
-  public static function setSession($dataArray) {
+  public static function set($dataArray) {
     foreach ($dataArray as $key => $value) {
       $_SESSION[$key] = $value;
+    }
+  }
+
+  //add data to session
+  public static function unset($dataArray) {
+    foreach ($dataArray as $session) {
+      if (!!$_SESSION[$session]) {
+        unset($_SESSION[$session]);
+      }
     }
   }
 
