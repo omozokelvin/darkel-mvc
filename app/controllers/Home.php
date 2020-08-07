@@ -1,16 +1,16 @@
 <?php
 
 use libraries\Controller;
-use models\Page;
+use models\HomeModel;
 
 class Home extends Controller {
   public function __construct() {
-    $this->pageModel = new Page('Welcome');
+    $this->homeModel = new HomeModel('Welcome');
   }
 
   public function index() {
     $data = [
-      'title' => $this->pageModel->getWelcomeMessage(),
+      'title' => $this->homeModel->getWelcomeMessage(),
     ];
 
     $this->view('pages/index', $data);

@@ -44,8 +44,8 @@ class Database {
     }
   }
 
-  public static function ins() {
-    if (self::$INSTANCE == null) {
+  public static function instance() {
+    if (self::$INSTANCE === null) {
       self::$INSTANCE = new self;
     }
     return self::$INSTANCE;
