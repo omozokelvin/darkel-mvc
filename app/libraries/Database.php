@@ -35,7 +35,6 @@ class Database {
     );
 
     //Create PDO instance
-
     try {
       $this->dbHandler = new PDO($dsn, $this->user, $this->password, $options);
     } catch (PDOException  $e) {
@@ -44,6 +43,7 @@ class Database {
     }
   }
 
+  //create single class instance
   public static function instance() {
     if (self::$INSTANCE === null) {
       self::$INSTANCE = new self;
@@ -51,14 +51,17 @@ class Database {
     return self::$INSTANCE;
   }
 
+  //begin transaction
   public function beginTransaction(): bool {
     return $this->dbHandler->beginTransaction();
   }
 
+  //commit transaction
   public function commit(): bool {
     return $this->dbHandler->commit();
   }
 
+  //perform rollback
   public function rollBack(): bool {
     return $this->dbHandler->rollBack();
   }
