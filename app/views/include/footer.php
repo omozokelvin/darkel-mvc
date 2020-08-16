@@ -1,4 +1,4 @@
- <script src="<?= URL_ROOT; ?>/js/main.js"></script>
+ <script src="<?= URL_PUBLIC; ?>/js/main.js"></script>
  </body>
 
  </html>

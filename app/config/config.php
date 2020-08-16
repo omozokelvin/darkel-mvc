@@ -13,6 +13,7 @@ define('APP_ROOT', dirname(dirname(__FILE__)));
 //URL Root
 // http://localhost/darkel-mvc
 define('URL_ROOT', '_YOUR_URL_');
+define('URL_PUBLIC', URL_ROOT . '/public');
 
 //SITE Name 
 define('SITE_NAME', '_YOUR_SITE_NAME_');
